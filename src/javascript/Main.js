@@ -6,6 +6,7 @@ function main(){
   var maxWidth;
   var maxHeight;
   var ctx;
+  var name;
 
   // DOM ELEMENTS ==========================================
 
@@ -15,8 +16,10 @@ function main(){
   var splashElement;
   var canvasElement;
   var endGameElement;
-  var scoreElement;
-  var audioElement;
+  var finalScore;
+  var inputElement;
+  var ulElement;
+  var scoreTable;
 
   // HTML ==================================================
 
@@ -44,7 +47,42 @@ function main(){
     buildSplash();
   }
 
-  // Get mouse position inside canvas =====================
+  // =======================================================
+  // SPLASH SCREEN =========================================
+
+  function inputHandler(event){
+
+    if (event.key == 'Enter' && inputElement.value != ''){
+      
+      name = inputElement.value;
+      console.log(name);
+
+      startButton.setAttribute('style','display:default');
+      inputElement.removeEventListener('keypress', inputHandler);
+      inputElement.setAttribute('style', 'display:none');
+
+    }  
+  }
+
+  function buildSplash() {
+    splashElement = createHtml(`<div id="splash-container">   
+      <h1>Game Title</h1>
+      <p>Help Kiwi avoid the cucumbers by moving the pointer over the game screen.</p>
+      <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
+      <button id="start-button" style="display:none">Start Game</button>
+  </div>`);
+    mainContentElement.appendChild(splashElement);
+    
+    inputElement = document.getElementById('insert-name');
+    startButton = document.getElementById('start-button');
+
+    inputElement.addEventListener('keypress', inputHandler);
+    startButton.addEventListener('click', destroySplash);
+  }
+
+  // GAME SCREEN ===========================================
+
+  // MOUSE POS INSIDE CANVAS =====================
 
   function getMousePos(canvas, event) {
     var rect = canvas.getBoundingClientRect();
@@ -54,25 +92,6 @@ function main(){
     };
   }
 
-  // =======================================================
-  // SPLASH SCREEN =========================================
-
-  function buildSplash() {
-    splashElement = createHtml(`<div id="splash-container">   
-      <h1>Game Title</h1>
-      <p>Help Kiwi avoid the cucumbers by moving the pointer over the game screen.</p>
-      <button id="start-button">Start Game</button>
-  </div>`);
-
-    audioElement = createHtml();
-
-    mainContentElement.appendChild(splashElement);
-    startButton = document.getElementById('start-button');
-
-    startButton.addEventListener('click', destroySplash);
-  }
-
-  // GAME SCREEN ===========================================
   function updatePosition() {
     var mousePos = getMousePos(canvas, event);
 
@@ -83,18 +102,19 @@ function main(){
     canvasElement = createHtml(`<canvas id="canvas" width="1000" height="800"></canvas>`);
     mainContentElement.appendChild(canvasElement);
     
+    // CANVAS ==
     canvas = document.getElementById('canvas');
     maxWidth = Number(canvas.getAttribute('width'));
     maxHeight = Number(canvas.getAttribute('height'));
     ctx = canvas.getContext('2d');
+    // ========
 
-    game = new Game(ctx, maxWidth, maxHeight);
-    
+    game = new Game(name, ctx, maxWidth, maxHeight);
     game.end(function(){
       destroyCanvas();
     });
-
     game.makeItRain();  
+
     canvas.addEventListener('mousemove', updatePosition);
     
     game.draw();
@@ -106,18 +126,23 @@ function main(){
     endGameElement = createHtml(`<div id="endgame-container">
       <h1>Game Over</h1>
       <p>You scored
-        <span id="score"></span> points.</p>
+        <span id="final-score"></span> points.</p>
       <button id="restart-button">Back to Start</button>
     </div>`);
-
     mainContentElement.appendChild(endGameElement);
+    
     restartButton = document.getElementById('restart-button');
-    scoreElement = document.getElementById('score');
-    scoreElement.innerText = game.player.score;
+    finalScore = document.getElementById('final-score');
+    ulElement = document.getElementById('score-board');
 
+    finalScore.innerText = game.player.score;
+
+    scoreTable = createHtml('<li></li>');
+    ulElement.appendChild(scoreTable);
+    scoreTable.innerText = game.player.name + ' - ' + game.player.score + ' points';
+    
     restartButton.addEventListener('click', destroyEndGame);
   }
-  
   buildSplash();
 }
 

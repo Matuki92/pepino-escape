@@ -12,16 +12,12 @@ body {
   padding: 0;
 }
 
-
-
-
 /* ---- typography ---- */
 
 body {
   color: #111;
   font-family: 'Bungee', cursive, 'Arial';
   line-height: 147%;
-
 }
 
 h1{
@@ -40,26 +36,47 @@ body {
   cursor: crosshair;
 }
 
-button{
+audio{
+  display: block;
+  margin: 0 auto;
+}
+
+button, input {
   font-family: inherit;
-  background-color: rgb(0, 41, 221);
+  background-color: none;
   padding: 20px;
-  color: white;
+  color: black;
   font-size: 25px;
   width: 50%;
 }
 
-button:hover {
-  background-color: red;
+button {
+  background-image: url('./../../images/cucumber-btn.png');
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(0, 109, 0);
+  border-radius: 35%;
+  border: 2px outset black;
 }
 
-/* ---- components ---- */
+button:hover {
+  color:white;
+  border: 2px inset black;
+  text-shadow: 2px 5px black;
+}
+
+input:hover {
+  background-color: rgb(196, 196, 196);
+}
+
+/* ---- SPLASH SCREEN ---- */
 
 #splash-container, #endgame-container{
   width: 1000px;
   margin: 0 auto;
   background-color:white;
   text-align: center;
+  text-shadow: 2px 2px rgb(115, 255, 0);
   padding: 50px;
   border: 5px solid rgb(0, 0, 0);
   border-radius: 25px;
@@ -69,6 +86,8 @@ button:hover {
 #splash-container *{
   margin: 20px;
 }
+
+/* ---- CANVAS ---- */
 
 #canvas {
   display:block;
@@ -81,7 +100,17 @@ button:hover {
   background: url('./../../images/bg-loop.gif');
 }
 
-audio{
-  display: block;
-  margin: 0 auto;
+/* ---- SCORE ---- */
+
+#score-board {
+  position:fixed;
+  left: 20px;
+  color:white;
+  padding: 20px;
 }
+
+#score-board li{
+  text-align: center;
+  list-style-type: none;
+}
+

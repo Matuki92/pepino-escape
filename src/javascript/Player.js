@@ -1,8 +1,9 @@
 'use strict'
 
-function Player(x, y){
+function Player(name, x, y){
   var self = this;
 
+  self.name = name;
   self.x = x;
   self.y = y;
 

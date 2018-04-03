@@ -1,15 +1,18 @@
 'use strict'
 
-function Game(ctx, maxWidth, maxHeight){
+function Game(name, ctx, maxWidth, maxHeight){
   var self = this;
 
   self.ctx = ctx;
   self.maxWidth = maxWidth;
   self.maxHeight = maxHeight;
   
-  self.player = new Player(maxWidth/2, maxHeight/2);
+  self.player = new Player(name, maxWidth/2, maxHeight/2);
+
   self.obstacles = [];
 }
+
+// CANVAS DRAWING =======================
 
 Game.prototype.clearScreen = function(){
   var self = this;
@@ -36,17 +39,16 @@ Game.prototype.drawObstacle = function(obstacle){
             obstacle.width, obstacle.height);
 }
 
-
-Game.prototype.updateStats = function(){
+Game.prototype.drawStats = function(){
   var self = this;
 
   self.ctx.fillStyle = 'white';
   self.ctx.font = '40px Arial';
   self.ctx.fillText('Lives: ' + self.player.lives, 30, 40);
   self.ctx.fillText('Score: ' + self.player.score, self.maxWidth - 200, 40);
-
 }
 
+// MAIN DRAW FUNCTION ============
 
 Game.prototype.draw = function(){
   var self = this;
@@ -54,7 +56,7 @@ Game.prototype.draw = function(){
   if (self.player.lives >= 0){
 
     self.clearScreen();
-    self.updateStats();
+    self.drawStats();
 
     self.obstacles.forEach(function(obstacle){
       self.collisionCheck(obstacle);
@@ -78,12 +80,8 @@ Game.prototype.draw = function(){
   }
 }
 
-Game.prototype.end = function(callback){
-  var self = this;
 
-  self.callback = callback;
-}
-
+// OBSTACLES ================
 
 Game.prototype.makeItRain = function(){
   var self = this;
@@ -101,6 +99,7 @@ Game.prototype.makeItRain = function(){
   self.intervalId = window.setInterval(makeObstacle, 3000);
 }
 
+// COLLISIONS ================
 
 Game.prototype.collisionCheck = function (obstacle) {
   var self = this;
@@ -120,4 +119,11 @@ Game.prototype.collisionCheck = function (obstacle) {
   }
 }
   
+// END =============
+
+Game.prototype.end = function (callback) {
+  var self = this;
+
+  self.callback = callback;
+}
 
