@@ -20,6 +20,11 @@ body {
   line-height: 147%;
 }
 
+h1 {
+  font-size: 50px;
+  padding: 40px;
+}
+
 h2{
   color:white;
   font-size: 40px;
@@ -33,7 +38,7 @@ p {
 /* ---- layout ---- */
 
 body {
-  background-color: rgb(1, 41, 0);
+  background-color: rgb(2, 110, 0);
   cursor: crosshair;
 }
 
@@ -124,7 +129,7 @@ input:hover {
 
 #score-board li{
   list-style-type: none;
-  
+
 }
 
 /* ---- CANVAS ---- */

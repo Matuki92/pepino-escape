@@ -78,8 +78,9 @@ function main(){
 
   function buildSplash() {
     splashElement = createHtml(`<div id="splash-container">   
-      <h1>Game Title</h1>
-      <p>Help Kiwi avoid the cucumbers by moving the pointer over the game screen.</p>
+      <h1>Pepino Escape</h1>
+      <p>Cucumbers have invaded planet Earth and forced Kiwi to leave the planet.<br>
+      Avoid them by moving the pointer over the game screen.</p>
       <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
       <button id="start-button" style="display:none">Start Game</button>
   </div>`);
