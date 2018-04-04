@@ -24,12 +24,12 @@ function main(){
   var scoreTable;
 
   function handleMusicSwitch(){
-    if (musicSwitch.innerText == 'Mute'){
-      musicSwitch.innerText = 'Unmute';
+    if (musicSwitch.innerText == 'Unmute'){
+      musicSwitch.innerText = 'Mute';
       audioElement.muted = false;
     }
     else{
-      musicSwitch.innerText = 'Mute';
+      musicSwitch.innerText = 'Unmute';
       audioElement.muted = true;
     }
   }
