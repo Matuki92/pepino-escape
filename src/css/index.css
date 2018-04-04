@@ -32,7 +32,7 @@ p {
 /* ---- layout ---- */
 
 body {
-  background-color: rgb(0, 15, 65);
+  background-color: rgb(1, 41, 0);
   cursor: crosshair;
 }
 
@@ -110,7 +110,6 @@ input:hover {
 }
 
 #score-board li{
-  text-align: center;
   list-style-type: none;
 }
 

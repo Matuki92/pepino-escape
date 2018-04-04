@@ -28,6 +28,6 @@ Player.prototype.getImages = function() {
   self.image = new Image();
   self.image.src = './images/player-kiwi.png';
 
-  self.playerFire = new Image();
-  self.playerFire.src = './images/rocket-fire.gif';
+  self.smoke = new Image();
+  self.smoke.src = './images/smoke.gif';
 }
