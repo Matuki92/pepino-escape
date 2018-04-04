@@ -7,6 +7,7 @@ function main(){
   var maxHeight;
   var ctx;
   var name;
+  var storage = window.localStorage;
 
   // DOM ELEMENTS ==========================================
 
@@ -21,7 +22,8 @@ function main(){
   var finalScore;
   var inputElement;
   var ulElement;
-  var scoreTable;
+
+  
 
   function handleMusicSwitch(){
     if (musicSwitch.innerText == 'Unmute'){
@@ -64,6 +66,30 @@ function main(){
   // =======================================================
   // SPLASH SCREEN =========================================
 
+ /* function sortScores(array){
+    var newArray = array.sort(function(a, b){
+      return a > b;
+    });
+    console.log(newArray);
+  }*/
+
+  function getScoreInfo() {
+    ulElement = document.getElementById('score-board');
+    var scoreArray = [];
+
+    for (var score in storage){
+      var player = storage.getItem(score);
+      var scoreTable = createHtml('<li></li>');
+
+      if (player != null){
+        scoreArray.push(score);
+
+        ulElement.appendChild(scoreTable);
+        scoreTable.innerText = player + ' - ' + score + ' points';
+      }
+    }
+  }
+
   function inputHandler(event){
 
     if (event.key == 'Enter' && inputElement.value != ''){
@@ -91,6 +117,8 @@ function main(){
 
     inputElement.addEventListener('keypress', inputHandler);
     startButton.addEventListener('click', destroySplash);
+
+    getScoreInfo();
   }
 
   // GAME SCREEN ===========================================
@@ -130,13 +158,13 @@ function main(){
     
     restartButton = document.getElementById('restart-button');
     finalScore = document.getElementById('final-score');
-    ulElement = document.getElementById('score-board');
+    
 
     finalScore.innerText = game.player.score;
 
-    scoreTable = createHtml('<li></li>');
-    ulElement.appendChild(scoreTable);
-    scoreTable.innerText = game.player.name + ' - ' + game.player.score + ' points';
+    storage.setItem(game.player.score, game.player.name);
+    
+    
     
     restartButton.addEventListener('click', destroyEndGame);
   }

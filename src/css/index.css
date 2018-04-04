@@ -1,5 +1,4 @@
 
-
 html {
   box-sizing: border-box;
 }
@@ -13,8 +12,13 @@ body {
 }
 
 /* ---- typography ---- */
+@font-face {
+    font-family: 'Bungee';
+    src: url('./../font/Bungee-Regular.ttf');
+}
 
 body {
+
   color: #111;
   font-family: 'Bungee', cursive, 'Arial';
   line-height: 147%;
@@ -30,6 +34,18 @@ h2{
   font-size: 40px;
   line-height: 1.7em;
 }
+
+h3 {
+  font-size: 35px;
+  text-decoration: underline;
+  text-shadow: 2px 2px black;
+}
+
+li {
+  font-size: 20px;
+  line-height: 1.5em;
+}
+
 
 p {
   font-size: 30px;
@@ -123,6 +139,7 @@ input:hover {
 #score-board {
   position:fixed;
   left: 20px;
+  top: 20%;
   color:white;
   padding: 20px;
 }
