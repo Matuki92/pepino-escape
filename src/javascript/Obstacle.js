@@ -19,6 +19,13 @@ function Obstacle(ctx, maxWidth, maxHeight){
   self.getImages();
 }
 
+Obstacle.prototype.getImages = function () {
+  var self = this;
+
+  self.image = new Image();
+  self.image.src = './images/cucumber.png';
+}
+
 Obstacle.prototype.update = function () {
   var self = this;
 
@@ -37,12 +44,6 @@ Obstacle.prototype.randomX = function(){
   self.x = Math.floor(Math.random()*self.maxWidth);
 }
 
-Obstacle.prototype.getImages = function () {
-  var self = this;
-
-  self.image = new Image();
-  self.image.src = './images/cucumber.png';
-}
 
 Obstacle.prototype.draw = function(){
   var self = this;

@@ -11,6 +11,8 @@ function main(){
   // DOM ELEMENTS ==========================================
 
   var mainContentElement = document.getElementById('content');
+  var musicSwitch = document.getElementById('music');
+  var audioElement = document.getElementById('audio-element');
   var startButton;
   var restartButton;
   var splashElement;
@@ -20,6 +22,18 @@ function main(){
   var inputElement;
   var ulElement;
   var scoreTable;
+
+  function handleMusicSwitch(){
+    if (musicSwitch.innerText == 'Mute'){
+      musicSwitch.innerText = 'Unmute';
+      audioElement.muted = false;
+    }
+    else{
+      musicSwitch.innerText = 'Mute';
+      audioElement.muted = true;
+    }
+  }
+  musicSwitch.addEventListener('click', handleMusicSwitch);
 
   // HTML ==================================================
 
@@ -59,7 +73,6 @@ function main(){
       startButton.setAttribute('style','display:default');
       inputElement.removeEventListener('keypress', inputHandler);
       inputElement.setAttribute('style', 'display:none');
-
     }  
   }
 

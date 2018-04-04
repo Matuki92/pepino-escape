@@ -20,8 +20,9 @@ body {
   line-height: 147%;
 }
 
-h1{
-  font-size: 50px;
+h2{
+  color:white;
+  font-size: 40px;
   line-height: 1.7em;
 }
 
@@ -69,6 +70,18 @@ input:hover {
   background-color: rgb(196, 196, 196);
 }
 
+@media (max-width: 1370px) {
+  #score-board {
+    display:none;
+  }
+}
+
+@media (max-width: 980px) {
+  #content {
+    display:none;
+  }
+}
+
 /* ---- SPLASH SCREEN ---- */
 
 #splash-container, #endgame-container{
@@ -87,17 +100,17 @@ input:hover {
   margin: 20px;
 }
 
-/* ---- CANVAS ---- */
+/* ---- SETTINGS ---- */
 
-#canvas {
-  display:block;
-  margin: 0 auto;
-  cursor: none;
-  background-color: white;
-  margin-top: 50px;
-  border: 2px inset silver;
-  border-radius: 5px;
-  background: url('./../../images/bg-loop.gif');
+#settings {
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  left: 20px;
+}
+
+#settings > *:hover {
+  color: rgb(43, 255, 0);
 }
 
 /* ---- SCORE ---- */
@@ -112,4 +125,18 @@ input:hover {
 #score-board li{
   list-style-type: none;
 }
+
+/* ---- CANVAS ---- */
+
+#canvas {
+  display:block;
+  margin: 0 auto;
+  cursor: none;
+  background-color: white;
+  margin-top: 50px;
+  border: 2px inset silver;
+  border-radius: 5px;
+  background: url('./../../images/bg-loop.gif');
+}
+
 
