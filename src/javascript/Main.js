@@ -55,7 +55,6 @@ function main(){
     if (event.key == 'Enter' && inputElement.value != ''){
       
       name = inputElement.value;
-      console.log(name);
 
       startButton.setAttribute('style','display:default');
       inputElement.removeEventListener('keypress', inputHandler);
@@ -84,20 +83,6 @@ function main(){
 
   // MOUSE POS INSIDE CANVAS =====================
 
-  function getMousePos(canvas, event) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-    };
-  }
-
-  function updatePosition() {
-    var mousePos = getMousePos(canvas, event);
-
-    game.player.updatePosition(mousePos);
-  }
-
   function gameScreen(){
     canvasElement = createHtml(`<canvas id="canvas" width="1000" height="800"></canvas>`);
     mainContentElement.appendChild(canvasElement);
@@ -109,15 +94,13 @@ function main(){
     ctx = canvas.getContext('2d');
     // ========
 
-    game = new Game(name, ctx, maxWidth, maxHeight);
+    game = new Game(name, canvas, ctx, maxWidth, maxHeight);
     game.end(function(){
       destroyCanvas();
     });
     game.makeItRain();  
-
-    canvas.addEventListener('mousemove', updatePosition);
     
-    game.draw();
+    game.frame();
   } 
 
   // END GAME =============================================

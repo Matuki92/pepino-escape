@@ -1,15 +1,17 @@
 'use strict'
 
-function Game(name, ctx, maxWidth, maxHeight){
+function Game(name, canvas, ctx, maxWidth, maxHeight){
   var self = this;
 
   self.ctx = ctx;
   self.maxWidth = maxWidth;
   self.maxHeight = maxHeight;
   
-  self.player = new Player(name, maxWidth/2, maxHeight/2);
+  self.player = new Player( name, canvas, ctx, maxWidth/2, maxHeight/2);
 
   self.obstacles = [];
+
+  self.playerFireAnimationFrame = 0;
 }
 
 // CANVAS DRAWING =======================
@@ -18,25 +20,6 @@ Game.prototype.clearScreen = function(){
   var self = this;
   
   self.ctx.clearRect(0, 0, self.maxWidth, self.maxHeight);
-}
-
-Game.prototype.drawPlayer = function(){
-  var self = this;
-
-  self.ctx.drawImage(self.player.image,
-      self.player.x - self.player.width /2,
-      self.player.y - self.player.height /2,
-      self.player.width, self.player.height);
-}
-
-
-Game.prototype.drawObstacle = function(obstacle){
-  var self = this;
-
-  self.ctx.drawImage(obstacle.image,
-            obstacle.x - obstacle.width / 2,
-            obstacle.y - obstacle.height / 2,
-            obstacle.width, obstacle.height);
 }
 
 Game.prototype.drawStats = function(){
@@ -48,30 +31,34 @@ Game.prototype.drawStats = function(){
   self.ctx.fillText('Score: ' + self.player.score, self.maxWidth - 200, 40);
 }
 
-// MAIN DRAW FUNCTION ============
+// DRAW FUNCTION ============
 
 Game.prototype.draw = function(){
   var self = this;
+
+  self.clearScreen();
+  self.obstacles.forEach(function (obstacle) {
+    self.collisionCheck(obstacle);
+    
+    if (obstacle.update()) {
+      self.player.score += 10;
+    }
+    
+    obstacle.draw();
+  });
+  
+  self.player.draw();
+  self.drawStats();
+}
+
+// MAIN FRAMES FUNCTION =============================================
+Game.prototype.frame = function(){
+  var self = this;
   
   if (self.player.lives >= 0){
-
-    self.clearScreen();
-    self.drawStats();
-
-    self.obstacles.forEach(function(obstacle){
-      self.collisionCheck(obstacle);
-
-      if (obstacle.update()){
-        self.player.score += 10;
-      }
-     
-      self.drawObstacle(obstacle);
-    });
-
-    self.drawPlayer();
-
+    self.draw();
     window.requestAnimationFrame(function(){
-      self.draw(event);
+      self.frame();
     });
   }
   else{
@@ -80,7 +67,6 @@ Game.prototype.draw = function(){
   }
 }
 
-
 // OBSTACLES ================
 
 Game.prototype.makeItRain = function(){
@@ -88,7 +74,7 @@ Game.prototype.makeItRain = function(){
 
   function makeObstacle(){
 
-    var obstacle = new Obstacle(self.maxWidth, self.maxHeight);
+    var obstacle = new Obstacle(self.ctx, self.maxWidth, self.maxHeight);
     self.obstacles.push(obstacle);
 
     if (self.obstacles.length === 10) {
@@ -126,4 +112,6 @@ Game.prototype.end = function (callback) {
 
   self.callback = callback;
 }
+
+
 
