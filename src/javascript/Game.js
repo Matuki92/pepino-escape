@@ -103,7 +103,7 @@ Game.prototype.collisionCheck = function (obstacle) {
        obstacle.y = obstacle.startPosition;
        self.player.lives--;
        self.player.meow.play();
-       self.player.meow.currentTime = 0.8;
+       self.player.meow.currentTime = 0.2;
 
        self.ctx.fillStyle = 'rgb(143, 0, 0)';
        self.ctx.fillRect(0, 0, self.maxWidth, self.maxHeight);
