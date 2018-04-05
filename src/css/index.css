@@ -55,8 +55,7 @@ p {
 /* ---- layout ---- */
 
 body {
-  background-image: url('./../../images/body-bg.jpg');  
-  background-size: cover;
+  background-image: url('./../../images/body-bg.jpg');
   cursor: crosshair;
 }
 
