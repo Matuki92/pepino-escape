@@ -47,6 +47,7 @@ Scores.prototype.sortHighest = function(){
 
   for (i = 0; i < 10; i++) {
     var k = sorted[i];
+    
     self.drawSorted(k, self.storage[k]);
   }
 } 

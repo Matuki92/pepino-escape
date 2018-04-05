@@ -82,7 +82,7 @@ function main(){
     
     splashElement = createHtml(`<div id="splash-container">   
       <h1>Pepino Escape</h1>
-      <p>Cucumbers have invaded planet Earth and forced Kiwi to leave the planet.<br>
+      <p>Cucumbers have invaded the Earth and forced Kiwi to leave the planet.<br>
       Avoid them by moving the pointer over the game screen.</p>
       <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
       <button id="start-button" style="display:none">Start Game</button>
