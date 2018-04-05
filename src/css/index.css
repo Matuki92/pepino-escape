@@ -33,6 +33,7 @@ h2{
   color:white;
   font-size: 40px;
   line-height: 1.7em;
+  margin: 0;
 }
 
 h3 {
@@ -126,7 +127,6 @@ input:hover {
 /* ---- SETTINGS ---- */
 
 #settings {
-  display: inline-block;
   position: fixed;
   top: 0;
   left: 20px;
