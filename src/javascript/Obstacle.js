@@ -10,11 +10,11 @@ function Obstacle(ctx, maxWidth, maxHeight){
 
   self.startPosition = 0 - self.height / 2;
 
-  self.x = self.randomX();
-  self.y = self.startPosition;
-
   self.maxWidth = maxWidth;
   self.maxHeight = maxHeight;
+
+  self.x = self.randomX();
+  self.y = self.startPosition;
 
   self.getImages();
 }
@@ -29,21 +29,21 @@ Obstacle.prototype.getImages = function () {
 Obstacle.prototype.update = function () {
   var self = this;
 
-  if (self.y - self.height /2 >= self.maxHeight){
+  if (self.y > self.maxHeight){
     self.y = self.startPosition;
-    self.randomX();
+    self.x = self.randomX();
 
     self.speed += 0.5;
     return true;
-  }
-  
+  }   
+
   self.y += self.speed;
 }
 
 Obstacle.prototype.randomX = function(){
   var self = this;
 
-  self.x = Math.floor(Math.random()*self.maxWidth);
+  return Math.floor(Math.random()*self.maxWidth);
 }
 
 

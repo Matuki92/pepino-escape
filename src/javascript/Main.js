@@ -7,13 +7,13 @@ function main(){
   var maxHeight;
   var ctx;
   var name;
-  var storage = window.localStorage;
 
   // DOM ELEMENTS ==========================================
 
   var mainContentElement = document.getElementById('content');
   var musicSwitch = document.getElementById('music');
   var audioElement = document.getElementById('audio-element');
+  var ulElement = document.getElementById('score-board');
   var startButton;
   var restartButton;
   var splashElement;
@@ -21,17 +21,16 @@ function main(){
   var endGameElement;
   var finalScore;
   var inputElement;
-  var ulElement;
 
-  
+  // BACKGROUND MUSIC =====================================
 
   function handleMusicSwitch(){
-    if (musicSwitch.innerText == 'Unmute'){
-      musicSwitch.innerText = 'Mute';
+    if (musicSwitch.innerText == 'Unmute sound'){
+      musicSwitch.innerText = 'Mute sound';
       audioElement.muted = false;
     }
     else{
-      musicSwitch.innerText = 'Unmute';
+      musicSwitch.innerText = 'Unmute sound';
       audioElement.muted = true;
     }
   }
@@ -65,30 +64,7 @@ function main(){
 
   // =======================================================
   // SPLASH SCREEN =========================================
-
- /* function sortScores(array){
-    var newArray = array.sort(function(a, b){
-      return a > b;
-    });
-    console.log(newArray);
-  }*/
-
-  function getScoreInfo() {
-    ulElement = document.getElementById('score-board');
-    var scoreArray = [];
-
-    for (var score in storage){
-      var player = storage.getItem(score);
-      var scoreTable = createHtml('<li></li>');
-
-      if (player != null){
-        scoreArray.push(score);
-
-        ulElement.appendChild(scoreTable);
-        scoreTable.innerText = player + ' - ' + score + ' points';
-      }
-    }
-  }
+  var scores = new Scores(ulElement, createHtml);
 
   function inputHandler(event){
 
@@ -103,6 +79,7 @@ function main(){
   }
 
   function buildSplash() {
+    
     splashElement = createHtml(`<div id="splash-container">   
       <h1>Pepino Escape</h1>
       <p>Cucumbers have invaded planet Earth and forced Kiwi to leave the planet.<br>
@@ -118,7 +95,7 @@ function main(){
     inputElement.addEventListener('keypress', inputHandler);
     startButton.addEventListener('click', destroySplash);
 
-    getScoreInfo();
+    scores.createBoard(ulElement, createHtml);
   }
 
   // GAME SCREEN ===========================================
@@ -136,18 +113,18 @@ function main(){
     ctx = canvas.getContext('2d');
     // ========
 
-    game = new Game(name, canvas, ctx, maxWidth, maxHeight);
-    game.end(function(){
+    function endCallback(){
       destroyCanvas();
-    });
-    game.makeItRain();  
-    
-    game.frame();
+    }
+    game = new Game(name, canvas, ctx, maxWidth, maxHeight, endCallback);    
   } 
 
   // END GAME =============================================
 
   function endGame(){
+    var pScore = game.player.score;
+    var pName = game.player.name;
+
     endGameElement = createHtml(`<div id="endgame-container">
       <h1>Game Over</h1>
       <p>You scored
@@ -162,9 +139,7 @@ function main(){
 
     finalScore.innerText = game.player.score;
 
-    storage.setItem(game.player.score, game.player.name);
-    
-    
+    scores.store(pName, pScore);
     
     restartButton.addEventListener('click', destroyEndGame);
   }

@@ -1,17 +1,21 @@
 'use strict'
 
-function Game(name, canvas, ctx, maxWidth, maxHeight){
+function Game(name, canvas, ctx, maxWidth, maxHeight, callback){
   var self = this;
 
   self.ctx = ctx;
   self.maxWidth = maxWidth;
   self.maxHeight = maxHeight;
+  self.callback = callback;
   
   self.player = new Player( name, canvas, ctx, maxWidth/2, maxHeight/2);
 
   self.obstacles = [];
 
   self.playerFireAnimationFrame = 0;
+
+  self.makeItRain();
+  self.frame();
 }
 
 // DRAW FUNCTIONS ==============================================
@@ -61,6 +65,7 @@ Game.prototype.frame = function(){
   }
   else{
     window.clearInterval(self.intervalId);
+    self.player.meow.pause();
     self.callback();
   }
 }
@@ -94,11 +99,13 @@ Game.prototype.collisionCheck = function (obstacle) {
   var collidesBottom = obstacle.y + obstacle.height / 2 - 15 > self.player.y - self.player.height / 2;
 
   if (collidesLeft && collidesRight && collidesTop && collidesBottom){
-       obstacle.randomX();
-       obstacle.y = 0;
+       obstacle.x = obstacle.randomX();
+       obstacle.y = obstacle.startPosition;
        self.player.lives--;
+       self.player.meow.play();
+       self.player.meow.currentTime = 0;
 
-    self.ctx.fillStyle = 'rgb(143, 0, 0)';
+       self.ctx.fillStyle = 'rgb(143, 0, 0)';
        self.ctx.fillRect(0, 0, self.maxWidth, self.maxHeight);
   }
 }

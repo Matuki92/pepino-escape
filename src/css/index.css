@@ -18,7 +18,7 @@ body {
 }
 
 body {
-
+  text-shadow: 3px 3px rgb(0, 196, 0);
   color: #111;
   font-family: 'Bungee', cursive, 'Arial';
   line-height: 147%;
@@ -37,24 +37,25 @@ h2{
 
 h3 {
   font-size: 35px;
-  text-decoration: underline;
   text-shadow: 2px 2px black;
+  text-align: center;
 }
 
 li {
   font-size: 20px;
   line-height: 1.5em;
+  text-align: right;
 }
-
 
 p {
   font-size: 30px;
   line-height: 1.45em;
 }
+
 /* ---- layout ---- */
 
 body {
-  background-color: rgb(2, 110, 0);
+  background-image: url('./../../images/body-bg.jpg');
   cursor: crosshair;
 }
 
@@ -92,7 +93,7 @@ input:hover {
 }
 
 @media (max-width: 1370px) {
-  #score-board {
+  #score-container {
     display:none;
   }
 }
@@ -105,12 +106,11 @@ input:hover {
 
 /* ---- SPLASH SCREEN ---- */
 
-#splash-container, #endgame-container{
+#splash-container, #endgame-container {
   width: 1000px;
   margin: 0 auto;
   background-color:white;
   text-align: center;
-  text-shadow: 2px 2px rgb(115, 255, 0);
   padding: 50px;
   border: 5px solid rgb(0, 0, 0);
   border-radius: 25px;
@@ -136,17 +136,15 @@ input:hover {
 
 /* ---- SCORE ---- */
 
-#score-board {
-  position:fixed;
-  left: 20px;
-  top: 20%;
+#score-container {
   color:white;
+  position:fixed;
+  top: 20%;
   padding: 20px;
 }
 
-#score-board li{
+#score-container li{
   list-style-type: none;
-
 }
 
 /* ---- CANVAS ---- */

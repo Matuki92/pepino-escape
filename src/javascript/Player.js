@@ -14,6 +14,8 @@ function Player(name, canvas, ctx, x, y){
   self.lives = 3;
   self.score = 0;
 
+  self.meow = new Audio('./sound/meow.wav');
+
   self.playerFireAnimationFrame = 0;
 
   self.getImages();
