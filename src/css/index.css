@@ -55,7 +55,8 @@ p {
 /* ---- layout ---- */
 
 body {
-  background-image: url('./../../images/body-bg.jpg');
+  background-image: url('./../../images/body-bg.jpg');  
+  background-size: cover;
   cursor: crosshair;
 }
 
@@ -71,6 +72,7 @@ button, input {
   color: black;
   font-size: 25px;
   width: 50%;
+  border-radius: 10px;
 }
 
 button {
@@ -107,6 +109,7 @@ input:hover {
 /* ---- SPLASH SCREEN ---- */
 
 #splash-container, #endgame-container {
+  background-image: url('./../../images/fur.jpg');
   width: 1000px;
   margin: 0 auto;
   background-color:white;
