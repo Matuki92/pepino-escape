@@ -56,6 +56,8 @@ Scores.prototype.drawSorted = function(k, key){
   var self = this;
 
   var scoreBoard = self.createHtml('<li class="score-row"></li>');
-  self.ulElement.appendChild(scoreBoard);
-  scoreBoard.innerText = key + ' = ' + k + ' Pts'; 
+  if (key){
+    self.ulElement.appendChild(scoreBoard);
+    scoreBoard.innerText = key + ' = ' + k + ' Pts'; 
+  }
 }
