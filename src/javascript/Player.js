@@ -1,75 +1,68 @@
 'use strict'
 
-function Player(name, canvas, ctx, x, y){
-  var self = this;
+class Player {
 
-  self.name = name;
-  self.canvas = canvas;
-  self.ctx = ctx;
-  self.x = x;
-  self.y = y;
+  constructor(name, canvas, ctx, x, y) {
+    this.name = name;
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
 
-  self.width = 120;
-  self.height = 300;
-  self.lives = 3;
-  self.score = 0;
+    this.width = 120;
+    this.height = 300;
+    this.lives = 3;
+    this.score = 0;
 
-  self.meow = new Audio('./sound/meow.wav');
+    this.meow = new Audio('./sound/meow.wav');
 
-  self.playerFireAnimationFrame = 0;
+    this.playerFireAnimationFrame = 0;
 
-  self.getImages();
-}
-
-Player.prototype.getImages = function() {
-  var self = this;
-
-  self.image = new Image();
-  self.image.src = './images/player-kiwi.png';
-
-  self.fireAnim = new Image();
-  self.fireAnim.src = './images/fire-sprite.png';
-}
-
-
-Player.prototype.update = function(){
-  var self = this;
-
-  function handleMousePos(event){
-    var rect = self.canvas.getBoundingClientRect();
-    self.x = event.clientX - rect.left;
-    self.y = event.clientY - rect.top;
-    self.canvas.removeEventListener('mousemove', handleMousePos);
-  } 
-
-  self.canvas.addEventListener('mousemove', handleMousePos);
-}
-
-Player.prototype.drawFire = function () {
-  var self = this;
-
-  var cutPosition = self.playerFireAnimationFrame * 140;
-  var fireX = self.x - 30;
-  var fireY = self.y + 85;
-
-  if (self.playerFireAnimationFrame === 11) {
-    self.playerFireAnimationFrame = 0;
+    this.getImages();
   }
 
-  self.ctx.drawImage(self.fireAnim,
-    cutPosition, 0, 140, 500,
-    fireX, fireY, 50, 200);
+  getImages() {
+    this.image = new Image();
+    this.image.src = './images/player-kiwi.png';
 
-  self.playerFireAnimationFrame++;
-}
+    this.fireAnim = new Image();
+    this.fireAnim.src = './images/fire-sprite.png';
+  }
 
-Player.prototype.draw = function(){
-  var self = this;
 
-  self.update();
-  self.ctx.drawImage(self.image,
-    self.x - self.width / 2,
-    self.y - self.height / 2,
-    self.width, self.height);
-  self.drawFire();
-}
+  update(){
+    const handleMousePos = (event) => {
+      var rect = this.canvas.getBoundingClientRect();
+      this.x = event.clientX - rect.left;
+      this.y = event.clientY - rect.top;
+      this.canvas.removeEventListener('mousemove', handleMousePos);
+    }
+
+    this.canvas.addEventListener('mousemove', handleMousePos);
+  }
+
+  drawFire() {
+    var cutPosition = this.playerFireAnimationFrame * 140;
+    var fireX = this.x - 30;
+    var fireY = this.y + 85;
+
+    if (this.playerFireAnimationFrame === 11) {
+      this.playerFireAnimationFrame = 0;
+    }
+
+    this.ctx.drawImage(this.fireAnim,
+      cutPosition, 0, 140, 500,
+      fireX, fireY, 50, 200);
+
+      this.playerFireAnimationFrame++;
+    }
+
+    draw(){
+      this.update();
+      this.ctx.drawImage(this.image,
+        this.x - this.width / 2,
+        this.y - this.height / 2,
+        this.width, this.height);
+        this.drawFire();
+      }
+    }

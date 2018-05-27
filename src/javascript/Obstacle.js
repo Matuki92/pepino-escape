@@ -1,57 +1,49 @@
 'use strict'
 
-function Obstacle(ctx, maxWidth, maxHeight){
-  var self = this;
+class Obstacle {
 
-  self.ctx = ctx;
-  self.width = 50;
-  self.height = 150;
-  self.speed = 6;
+  constructor(ctx, maxWidth, maxHeight) {
+    this.ctx = ctx;
+    this.width = 50;
+    this.height = 150;
+    this.speed = 6;
 
-  self.startPosition = 0 - self.height / 2;
+    this.startPosition = 0 - this.height / 2;
 
-  self.maxWidth = maxWidth;
-  self.maxHeight = maxHeight;
+    this.maxWidth = maxWidth;
+    this.maxHeight = maxHeight;
 
-  self.x = self.randomX();
-  self.y = self.startPosition;
+    this.x = this.randomX();
+    this.y = this.startPosition;
 
-  self.getImages();
-}
+    this.getImages();
+  }
 
-Obstacle.prototype.getImages = function () {
-  var self = this;
+  getImages() {
+    this.image = new Image();
+    this.image.src = './images/cucumber.png';
+  }
 
-  self.image = new Image();
-  self.image.src = './images/cucumber.png';
-}
+  update() {
+    if (this.y > this.maxHeight){
+      this.y = this.startPosition;
+      this.x = this.randomX();
 
-Obstacle.prototype.update = function () {
-  var self = this;
+      this.speed += 0.5;
+      return true;
+    }
 
-  if (self.y > self.maxHeight){
-    self.y = self.startPosition;
-    self.x = self.randomX();
+    this.y += this.speed;
+  }
 
-    self.speed += 0.5;
-    return true;
-  }   
+  randomX(){
+    return Math.floor(Math.random()*this.maxWidth);
+  }
 
-  self.y += self.speed;
-}
-
-Obstacle.prototype.randomX = function(){
-  var self = this;
-
-  return Math.floor(Math.random()*self.maxWidth);
-}
-
-
-Obstacle.prototype.draw = function(){
-  var self = this;
-
-  self.ctx.drawImage(self.image,
-    self.x - self.width / 2,
-    self.y - self.height / 2,
-    self.width, self.height);
+  draw(){
+    this.ctx.drawImage(this.image,
+      this.x - this.width / 2,
+      this.y - this.height / 2,
+      this.width, this.height);
+  }
 }

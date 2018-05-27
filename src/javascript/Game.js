@@ -1,122 +1,109 @@
 'use strict'
 
-function Game(name, canvas, ctx, maxWidth, maxHeight, callback){
-  var self = this;
+class Game{
 
-  self.ctx = ctx;
-  self.maxWidth = maxWidth;
-  self.maxHeight = maxHeight;
-  self.callback = callback;
-  
-  self.player = new Player( name, canvas, ctx, maxWidth/2, maxHeight/2);
+  constructor(name, canvas, ctx, maxWidth, maxHeight, callback) {
+    this.ctx = ctx;
+    this.maxWidth = maxWidth;
+    this.maxHeight = maxHeight;
+    this.callback = callback;
 
-  self.obstacles = [];
+    this.player = new Player( name, canvas, ctx, maxWidth/2, maxHeight/2);
 
-  self.playerFireAnimationFrame = 0;
+    this.obstacles = [];
 
-  self.makeItRain();
-  self.frame();
-}
+    this.playerFireAnimationFrame = 0;
 
-// DRAW FUNCTIONS ==============================================
+    this.makeItRain();
+    this.frame();
+  }
 
-Game.prototype.clearScreen = function(){
-  var self = this;
-  
-  self.ctx.clearRect(0, 0, self.maxWidth, self.maxHeight);
-}
+  // DRAW FUNCTIONS ==============================================
 
-Game.prototype.drawStats = function(){
-  var self = this;
+  clearScreen() {
+    this.ctx.clearRect(0, 0, this.maxWidth, this.maxHeight);
+  }
 
-  self.ctx.fillStyle = 'white';
-  self.ctx.font = '40px Arial';
-  self.ctx.fillText('Lives: ' + self.player.lives, 30, 40);
-  self.ctx.fillText('Score: ' + self.player.score, self.maxWidth - 230, 40);
-}
+  drawStats() {
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = '40px Arial';
+    this.ctx.fillText('Lives: ' + this.player.lives, 30, 40);
+    this.ctx.fillText('Score: ' + this.player.score, this.maxWidth - 230, 40);
+  }
 
-Game.prototype.draw = function(){
-  var self = this;
+  draw() {
+    this.clearScreen();
+    this.obstacles.forEach((obstacle) => {
+      this.collisionCheck(obstacle);
 
-  self.clearScreen();
-  self.obstacles.forEach(function (obstacle) {
-    self.collisionCheck(obstacle);
-    
-    if (obstacle.update()) {
-      self.player.score += 10;
-    }
-    
-    obstacle.draw();
-  });
-  
-  self.player.draw();
-  self.drawStats();
-}
+      if (obstacle.update()) {
+        this.player.score += 10;
+      }
 
-// MAIN FRAMES FUNCTION =============================================
-Game.prototype.frame = function(){
-  var self = this;
-  
-  if (self.player.lives >= 0){
-    self.draw();
-    window.requestAnimationFrame(function(){
-      self.frame();
+      obstacle.draw();
     });
+
+    this.player.draw();
+    this.drawStats();
   }
-  else{
-    window.clearInterval(self.intervalId);
-    self.player.meow.pause();
-    self.callback();
-  }
-}
 
-// OBSTACLES ========================================================
-
-Game.prototype.makeItRain = function(){
-  var self = this;
-
-  function makeObstacle(){
-
-    var obstacle = new Obstacle(self.ctx, self.maxWidth, self.maxHeight);
-    self.obstacles.push(obstacle);
-
-    if (self.obstacles.length === 10) {
-      window.clearInterval(self.intervalId);
+  // MAIN FRAMES FUNCTION =============================================
+  frame() {
+    if (this.player.lives >= 0){
+      this.draw();
+      window.requestAnimationFrame(() => {
+        this.frame();
+      });
+    }
+    else{
+      window.clearInterval(this.intervalId);
+      this.player.meow.pause();
+      this.callback();
     }
   }
 
-  self.intervalId = window.setInterval(makeObstacle, 3000);
-}
+  // OBSTACLES ========================================================
 
-// COLLISIONS =========================================================
+  makeItRain() {
+    const makeObstacle = () => {
+      var obstacle = new Obstacle(this.ctx, this.maxWidth, this.maxHeight);
+      this.obstacles.push(obstacle);
 
-Game.prototype.collisionCheck = function (obstacle) {
-  var self = this;
+      if (this.obstacles.length === 10) {
+        window.clearInterval(this.intervalId);
+      }
+    }
 
-  var collidesRight = obstacle.x - obstacle.width  / 2 + 35 < self.player.x + self.player.width / 2;
-  var collidesLeft = obstacle.x + obstacle.width / 2 - 15> self.player.x - self.player.width / 2;
-  var collidesTop = obstacle.y - obstacle.height / 2  + 15 < self.player.y + self.player.height / 2;
-  var collidesBottom = obstacle.y + obstacle.height / 2 - 15 > self.player.y - self.player.height / 2;
-
-  if (collidesLeft && collidesRight && collidesTop && collidesBottom){
-       obstacle.x = obstacle.randomX();
-       obstacle.y = obstacle.startPosition;
-       self.player.lives--;
-       self.player.meow.play();
-       self.player.meow.currentTime = 0.2;
-
-       self.ctx.fillStyle = 'rgb(143, 0, 0)';
-       self.ctx.fillRect(0, 0, self.maxWidth, self.maxHeight);
+    this.intervalId = window.setInterval(makeObstacle, 3000);
   }
+
+  // COLLISIONS =========================================================
+
+  collisionCheck(obstacle) {
+    var collidesRight = obstacle.x - obstacle.width  / 2 + 35 < this.player.x + this.player.width / 2;
+    var collidesLeft = obstacle.x + obstacle.width / 2 - 15> this.player.x - this.player.width / 2;
+    var collidesTop = obstacle.y - obstacle.height / 2  + 15 < this.player.y + this.player.height / 2;
+    var collidesBottom = obstacle.y + obstacle.height / 2 - 15 > this.player.y - this.player.height / 2;
+
+    if (collidesLeft && collidesRight && collidesTop && collidesBottom){
+      obstacle.x = obstacle.randomX();
+      obstacle.y = obstacle.startPosition;
+      this.player.lives--;
+      this.player.meow.play();
+      this.player.meow.currentTime = 0.2;
+
+      this.ctx.fillStyle = 'rgb(143, 0, 0)';
+      this.ctx.fillRect(0, 0, this.maxWidth, this.maxHeight);
+    }
+  }
+
+  // END =================================================================
+
+  end(callback) {
+    this.callback = callback;
+  }
+
+
+
+
 }
-  
-// END =================================================================
-
-Game.prototype.end = function (callback) {
-  var self = this;
-
-  self.callback = callback;
-}
-
-
-
