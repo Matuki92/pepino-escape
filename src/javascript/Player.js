@@ -32,19 +32,19 @@ class Player {
 
   update(){
     const handleMousePos = (event) => {
-      var rect = this.canvas.getBoundingClientRect();
-      this.x = event.clientX - rect.left;
-      this.y = event.clientY - rect.top;
-      this.canvas.removeEventListener('mousemove', handleMousePos);
+        const rect = this.canvas.getBoundingClientRect();
+        this.x = event.clientX - rect.left;
+        this.y = event.clientY - rect.top;
+        this.canvas.removeEventListener('mousemove', handleMousePos);
     }
 
     this.canvas.addEventListener('mousemove', handleMousePos);
   }
 
   drawFire() {
-    var cutPosition = this.playerFireAnimationFrame * 140;
-    var fireX = this.x - 30;
-    var fireY = this.y + 85;
+    const cutPosition = this.playerFireAnimationFrame * 140;
+    const fireX = this.x - 30;
+    const fireY = this.y + 85;
 
     if (this.playerFireAnimationFrame === 11) {
       this.playerFireAnimationFrame = 0;

@@ -101,8 +101,12 @@ input:hover {
 }
 
 @media (max-width: 980px) {
-  #content {
-    display:none;
+  #settings {
+    display: none;
+  }
+  #canvas{
+    width: 100vw;
+    height: 100vh;
   }
 }
 

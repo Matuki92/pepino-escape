@@ -66,7 +66,7 @@ class Game{
 
   makeItRain() {
     const makeObstacle = () => {
-      var obstacle = new Obstacle(this.ctx, this.maxWidth, this.maxHeight);
+      const obstacle = new Obstacle(this.ctx, this.maxWidth, this.maxHeight);
       this.obstacles.push(obstacle);
 
       if (this.obstacles.length === 10) {
@@ -80,10 +80,10 @@ class Game{
   // COLLISIONS =========================================================
 
   collisionCheck(obstacle) {
-    var collidesRight = obstacle.x - obstacle.width  / 2 + 35 < this.player.x + this.player.width / 2;
-    var collidesLeft = obstacle.x + obstacle.width / 2 - 15> this.player.x - this.player.width / 2;
-    var collidesTop = obstacle.y - obstacle.height / 2  + 15 < this.player.y + this.player.height / 2;
-    var collidesBottom = obstacle.y + obstacle.height / 2 - 15 > this.player.y - this.player.height / 2;
+    const collidesRight = obstacle.x - obstacle.width  / 2 + 35 < this.player.x + this.player.width / 2;
+    const collidesLeft = obstacle.x + obstacle.width / 2 - 15> this.player.x - this.player.width / 2;
+    const collidesTop = obstacle.y - obstacle.height / 2  + 15 < this.player.y + this.player.height / 2;
+    const collidesBottom = obstacle.y + obstacle.height / 2 - 15 > this.player.y - this.player.height / 2;
 
     if (collidesLeft && collidesRight && collidesTop && collidesBottom){
       obstacle.x = obstacle.randomX();

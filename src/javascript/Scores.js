@@ -25,22 +25,22 @@ class Scores{
   }
 
   sortHighest() {
-    var keys = Object.keys(this.storage),
+    let keys = Object.keys(this.storage),
     i, len = keys.length;
 
-    var sorted = keys.sort(function(a, b){
+    const sorted = keys.sort(function(a, b){
       return b.length - a.length || a < b;
     });
 
     for (i = 0; i < 10; i++) {
-      var k = sorted[i];
+      const k = sorted[i];
 
       this.drawSorted(k, this.storage[k]);
     }
   }
 
   drawSorted(k, key) {
-    var scoreBoard = this.createHtml('<li class="score-row"></li>');
+    const scoreBoard = this.createHtml('<li class="score-row"></li>');
     if (key){
       this.ulElement.appendChild(scoreBoard);
       scoreBoard.innerText = key + ' = ' + k + ' Pts';
