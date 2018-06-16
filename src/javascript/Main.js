@@ -98,6 +98,7 @@ function main(){
   // MOUSE POS INSIDE CANVAS =====================
 
   const gameScreen = () => {
+    audioElement.play();
     canvasElement = createHtml(`<canvas id="canvas" width="1000" height="800"></canvas>`);
     mainContentElement.appendChild(canvasElement);
 
