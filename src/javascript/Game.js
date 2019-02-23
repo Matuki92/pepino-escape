@@ -102,8 +102,4 @@ class Game{
   end(callback) {
     this.callback = callback;
   }
-
-
-
-
 }

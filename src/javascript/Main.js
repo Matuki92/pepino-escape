@@ -1,26 +1,26 @@
 'use strict'
 
-function main(){
+const main = () => {
 
   // DOM ELEMENTS ==========================================
 
-  const mainContentElement = document.getElementById('content');
-  const musicSwitch = document.getElementById('music');
-  const audioElement = document.getElementById('audio-element');
-  const ulElement = document.getElementById('score-board');
+  const mainContentElement = document.getElementById('content'),
+    musicSwitch = document.getElementById('music'),
+    audioElement = document.getElementById('audio-element'),
+    ulElement = document.getElementById('score-board');
 
-  let name;
-  let game;
+  let name,
+    game,
 
-  let inputElement;
-  let startButton;
+    inputElement,
+    startButton,
 
-  let restartButton;
-  let finalScore;
+    restartButton,
+    finalScore,
 
-  let splashElement;
-  let canvasElement;
-  let endGameElement;
+    splashElement,
+    canvasElement,
+    endGameElement;
 
   // BACKGROUND MUSIC =====================================
 
@@ -103,10 +103,10 @@ function main(){
     mainContentElement.appendChild(canvasElement);
 
     // CANVAS ==
-    const canvas = document.getElementById('canvas');
-    const maxWidth = Number(canvas.getAttribute('width'));
-    const maxHeight = Number(canvas.getAttribute('height'));
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('canvas'),
+      maxWidth = Number(canvas.getAttribute('width')),
+      maxHeight = Number(canvas.getAttribute('height')),
+      ctx = canvas.getContext('2d');
     // ========
 
     const endCallback = () => {
@@ -118,8 +118,8 @@ function main(){
   // END GAME =============================================
 
   const endGame = () => {
-    const pScore = game.player.score;
-    const pName = game.player.name;
+    const pScore = game.player.score,
+      pName = game.player.name;
 
     endGameElement = createHtml(`<div id="endgame-container">
       <h1>Game Over</h1>
