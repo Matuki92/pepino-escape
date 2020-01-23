@@ -166,4 +166,11 @@ input:hover {
   background: url('./../../images/bg-loop.gif');
 }
 
-
+#loading {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.301);
+  text-align: center;
+  line-height: 20;
+  font-size: 50px;
+}

@@ -25,15 +25,16 @@ const main = (loaded_data) => {
   // BACKGROUND MUSIC =====================================
 
   const handle_music_switch = () => {
-    if (music_switch.innerText == 'Unmute sound'){
-      music_switch.innerText = 'Mute sound';
+    if (music_switch.innerText == 'Sound Off'){
+      music_switch.innerText = 'Sound On';
       audio_element.muted = false;
     }
     else{
-      music_switch.innerText = 'Unmute sound';
+      music_switch.innerText = 'Sound Off';
       audio_element.muted = true;
     }
   }
+
   music_switch.addEventListener('click', handle_music_switch);
 
   // HTML ==================================================
@@ -53,6 +54,8 @@ const main = (loaded_data) => {
   };
   const destroy_canvas = () => {
     canvas.removeEventListener('mousemove', destroy_canvas);
+    audio_element.pause();
+    audio_element.currentTime = 0;
     canvas_element.remove();
     end_game();
   }
@@ -78,7 +81,7 @@ const main = (loaded_data) => {
   const build_splash = () => {
     splash_element = create_html(`<div id="splash-container">
       <h1>Pepino Escape</h1>
-      <p>Cucumbers have invaded the planet <br> and forced Kiwi to leave. <br>
+      <p>Cucumbers have invaded the planet <br> forcing Kiwi to leave. <br>
       Avoid them by moving the pointer over the game screen.</p>
       <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
       <button id="start-button" style="display:none">Start Game</button>
@@ -135,12 +138,13 @@ const main = (loaded_data) => {
     scores.store(p_name, p_score);
     restart_button.addEventListener('click', destroy_end_game);
   }
+
   build_splash();
 }
 
 // LOAD ==================================================
 
-window.addEventListener('load', () => preload(main));
+window.onload = preload(main);
 
 
 

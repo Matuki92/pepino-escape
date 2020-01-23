@@ -2,6 +2,9 @@
 
 const preload = (start) => {
 
+  const loading_element = document.querySelector('#loading');
+  loading_element.style.display = 'block';
+
   let images_loaded = false;
   let image_error = false;
 
@@ -39,7 +42,7 @@ const preload = (start) => {
     {
       target: 'meow',
       src: './sound/meow.wav',
-    }
+    },
   ]
 
   sounds.forEach((s) => {
@@ -89,6 +92,7 @@ const preload = (start) => {
       }
 
       clearInterval(load_checker);
+      loading_element.style.display = 'none';
       start(data);
     }
   }, 1000);

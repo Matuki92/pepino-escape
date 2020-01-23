@@ -9,6 +9,7 @@ class Game{
     this.callback = callback;
     this.images = images;
     this.sounds = sounds;
+    this.audio_el = document.getElementById('music');
 
     this.player = new Player(name, canvas, ctx, max_width/2, max_height/2, images, sounds);
 
@@ -91,8 +92,11 @@ class Game{
       obstacle.x = obstacle.random_x();
       obstacle.y = obstacle.start_position;
       this.player.lives--;
-      this.player.meow.play();
-      this.player.meow.currentTime = 0.2;
+
+      if (!this.audio_el.muted) {
+        this.player.meow.play();
+        this.player.meow.currentTime = 0.2;
+      }
 
       this.ctx.fillStyle = 'rgb(143, 0, 0)';
       this.ctx.fillRect(0, 0, this.max_width, this.max_height);
