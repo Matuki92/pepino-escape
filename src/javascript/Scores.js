@@ -1,30 +1,31 @@
 'use strict'
 
+// TODO: Remove this useless way to retrieve stored scores
 class Scores{
 
-  constructor(ulElement, createHtml) {
+  constructor(ul_element, create_html) {
     this.storage = window.localStorage;
 
-    this.ulElement = ulElement;
-    this.createHtml = createHtml;
+    this.ul_element = ul_element;
+    this.create_html = create_html;
   }
 
-  createBoard() {
-    this.cleanBoard(this.ulElement);
-    this.sortHighest();
+  create_board() {
+    this.clean_board(this.ul_element);
+    this.sort_highest();
   }
 
-  store(pScore, pName) {
-    this.storage.setItem(pName, pScore);
+  store(p_score, p_name) {
+    this.storage.setItem(p_name, p_score);
   }
 
-  cleanBoard() {
-    while (this.ulElement.firstChild){
-      this.ulElement.firstChild.remove();
+  clean_board() {
+    while (this.ul_element.firstChild){
+      this.ul_element.firstChild.remove();
     }
   }
 
-  sortHighest() {
+  sort_highest() {
     let keys = Object.keys(this.storage),
     i, len = keys.length;
 
@@ -35,15 +36,15 @@ class Scores{
     for (i = 0; i < 10; i++) {
       const k = sorted[i];
 
-      this.drawSorted(k, this.storage[k]);
+      this.draw_sorted(k, this.storage[k]);
     }
   }
 
-  drawSorted(k, key) {
-    const scoreBoard = this.createHtml('<li class="score-row"></li>');
+  draw_sorted(k, key) {
+    const score_board = this.create_html('<li class="score-row"></li>');
     if (key){
-      this.ulElement.appendChild(scoreBoard);
-      scoreBoard.innerText = key + ' = ' + k + ' Pts';
+      this.ul_element.appendChild(score_board);
+      score_board.innerText = key + ' = ' + k + ' Pts';
     }
   }
 }

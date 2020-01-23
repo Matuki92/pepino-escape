@@ -2,32 +2,33 @@
 
 class Obstacle {
 
-  constructor(ctx, maxWidth, maxHeight) {
+  constructor(ctx, max_width, max_height, images) {
     this.ctx = ctx;
     this.width = 50;
     this.height = 150;
     this.speed = 6;
 
-    this.startPosition = 0 - this.height / 2;
+    this.start_position = 0 - this.height / 2;
 
-    this.maxWidth = maxWidth;
-    this.maxHeight = maxHeight;
+    this.max_width = max_width;
+    this.max_height = max_height;
+    this.images = images;
 
-    this.x = this.randomX();
-    this.y = this.startPosition;
+    this.x = this.random_x();
+    this.y = this.start_position;
 
-    this.getImages();
+    this.get_loaded_data();
   }
 
-  getImages() {
-    this.image = new Image();
-    this.image.src = './images/cucumber.png';
+  get_loaded_data() {
+    // Set images
+    this.image = this.images.filter(img => img.target === 'obstacle')[0].image;
   }
 
   update() {
-    if (this.y > this.maxHeight){
-      this.y = this.startPosition;
-      this.x = this.randomX();
+    if (this.y > this.max_height){
+      this.y = this.start_position;
+      this.x = this.random_x();
 
       this.speed += 0.5;
       return true;
@@ -36,8 +37,8 @@ class Obstacle {
     this.y += this.speed;
   }
 
-  randomX(){
-    return Math.floor(Math.random()*this.maxWidth);
+  random_x(){
+    return Math.floor(Math.random()*this.max_width);
   }
 
   draw(){

@@ -2,67 +2,68 @@
 
 class Player {
 
-  constructor(name, canvas, ctx, x, y) {
+  constructor(name, canvas, ctx, x, y, images, sounds) {
     this.name = name;
     this.canvas = canvas;
     this.ctx = ctx;
     this.x = x;
     this.y = y;
+    this.images = images;
+    this.sounds = sounds;
 
     this.width = 120;
     this.height = 300;
     this.lives = 3;
     this.score = 0;
 
-    this.meow = new Audio('./sound/meow.wav');
+    this.player_fire_anim_frame = 0;
 
-    this.playerFireAnimationFrame = 0;
-
-    this.getImages();
+    this.get_loaded_data();
   }
 
-  getImages() {
-    this.image = new Image();
-    this.image.src = './images/player-kiwi.png';
+  get_loaded_data() {
+    // Set images
+    this.player_main_image = this.images.filter(img => img.target === 'player-main')[0].image;
+    this.player_fire_anim = this.images.filter(img => img.target === 'player-fire')[0].image;
 
-    this.fireAnim = new Image();
-    this.fireAnim.src = './images/fire-sprite.png';
+    // Set sounds
+    this.meow = this.sounds.filter(snd => snd.target === 'meow')[0].audio;
   }
 
 
   update(){
-    const handleMousePos = (event) => {
+    const handle_mouse_pos = (event) => {
         const rect = this.canvas.getBoundingClientRect();
         this.x = event.clientX - rect.left;
         this.y = event.clientY - rect.top;
-        this.canvas.removeEventListener('mousemove', handleMousePos);
+        this.canvas.removeEventListener('mousemove', handle_mouse_pos);
     }
 
-    this.canvas.addEventListener('mousemove', handleMousePos);
+    this.canvas.addEventListener('mousemove', handle_mouse_pos);
   }
 
-  drawFire() {
-    const cutPosition = this.playerFireAnimationFrame * 140;
-    const fireX = this.x - 30;
-    const fireY = this.y + 85;
+  draw_fire() {
+    const cut_position = this.player_fire_anim_frame * 140;
+    const fire_x = this.x - 30;
+    const fire_y = this.y + 85;
 
-    if (this.playerFireAnimationFrame === 11) {
-      this.playerFireAnimationFrame = 0;
+    if (this.player_fire_anim_frame === 11) {
+      this.player_fire_anim_frame = 0;
     }
 
-    this.ctx.drawImage(this.fireAnim,
-      cutPosition, 0, 140, 500,
-      fireX, fireY, 50, 200);
+    this.ctx.drawImage(this.player_fire_anim,
+      cut_position, 0, 140, 500,
+      fire_x, fire_y, 50, 200);
 
-      this.playerFireAnimationFrame++;
+      this.player_fire_anim_frame++;
     }
 
     draw(){
       this.update();
-      this.ctx.drawImage(this.image,
+      this.ctx.drawImage(this.player_main_image,
         this.x - this.width / 2,
         this.y - this.height / 2,
         this.width, this.height);
-        this.drawFire();
+        this.draw_fire();
       }
     }

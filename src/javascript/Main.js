@@ -1,44 +1,44 @@
 'use strict'
 
-const main = () => {
+const main = (loaded_data) => {
 
   // DOM ELEMENTS ==========================================
 
-  const mainContentElement = document.getElementById('content'),
-    musicSwitch = document.getElementById('music'),
-    audioElement = document.getElementById('audio-element'),
-    ulElement = document.getElementById('score-board');
+  const main_content_element = document.getElementById('content'),
+    music_switch = document.getElementById('music'),
+    audio_element = document.getElementById('audio-element'),
+    ul_element = document.getElementById('score-board');
 
   let name,
     game,
 
-    inputElement,
-    startButton,
+    input_element,
+    start_button,
 
-    restartButton,
-    finalScore,
+    restart_button,
+    final_score,
 
-    splashElement,
-    canvasElement,
-    endGameElement;
+    splash_element,
+    canvas_element,
+    end_game_element;
 
   // BACKGROUND MUSIC =====================================
 
-  const handleMusicSwitch = () => {
-    if (musicSwitch.innerText == 'Unmute sound'){
-      musicSwitch.innerText = 'Mute sound';
-      audioElement.muted = false;
+  const handle_music_switch = () => {
+    if (music_switch.innerText == 'Unmute sound'){
+      music_switch.innerText = 'Mute sound';
+      audio_element.muted = false;
     }
     else{
-      musicSwitch.innerText = 'Unmute sound';
-      audioElement.muted = true;
+      music_switch.innerText = 'Unmute sound';
+      audio_element.muted = true;
     }
   }
-  musicSwitch.addEventListener('click', handleMusicSwitch);
+  music_switch.addEventListener('click', handle_music_switch);
 
   // HTML ==================================================
 
-  const createHtml = html => {
+  const create_html = html => {
     const div = document.createElement('div');
     div.innerHTML = html;
     return div.children[0];
@@ -46,101 +46,101 @@ const main = () => {
 
   // DESTROY FUNCTIONS =====================================
 
-  const destroySplash = () => {
-    startButton.removeEventListener('click', destroySplash);
-    splashElement.remove();
-    gameScreen();
+  const destroy_splash = () => {
+    start_button.removeEventListener('click', destroy_splash);
+    splash_element.remove();
+    game_screen();
   };
-  const destroyCanvas = () => {
-    canvas.removeEventListener('mousemove', destroyCanvas);
-    canvasElement.remove();
-    endGame();
+  const destroy_canvas = () => {
+    canvas.removeEventListener('mousemove', destroy_canvas);
+    canvas_element.remove();
+    end_game();
   }
-  const destroyEndGame = () => {
-    restartButton.removeEventListener('click', destroyEndGame);
-    endGameElement.remove();
-    buildSplash();
+  const destroy_end_game = () => {
+    restart_button.removeEventListener('click', destroy_end_game);
+    end_game_element.remove();
+    build_splash();
   }
 
   // =======================================================
   // SPLASH SCREEN =========================================
-  const scores = new Scores(ulElement, createHtml);
+  const scores = new Scores(ul_element, create_html);
 
-  const inputHandler = (event) => {
-    if (event.key == 'Enter' && inputElement.value != ''){
-      name = inputElement.value;
-      startButton.setAttribute('style','display:default');
-      inputElement.removeEventListener('keypress', inputHandler);
-      inputElement.setAttribute('style', 'display:none');
+  const input_handler = (event) => {
+    if (event.key == 'Enter' && input_element.value != ''){
+      name = input_element.value;
+      start_button.setAttribute('style','display:default');
+      input_element.removeEventListener('keypress', input_handler);
+      input_element.setAttribute('style', 'display:none');
     }
   }
 
-  const buildSplash = () => {
-    splashElement = createHtml(`<div id="splash-container">
+  const build_splash = () => {
+    splash_element = create_html(`<div id="splash-container">
       <h1>Pepino Escape</h1>
       <p>Cucumbers have invaded the planet <br> and forced Kiwi to leave. <br>
       Avoid them by moving the pointer over the game screen.</p>
       <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
       <button id="start-button" style="display:none">Start Game</button>
   </div>`);
-    mainContentElement.appendChild(splashElement);
+    main_content_element.appendChild(splash_element);
 
-    inputElement = document.getElementById('insert-name');
-    startButton = document.getElementById('start-button');
-    inputElement.addEventListener('keypress', inputHandler);
-    startButton.addEventListener('click', destroySplash);
+    input_element = document.getElementById('insert-name');
+    start_button = document.getElementById('start-button');
+    input_element.addEventListener('keypress', input_handler);
+    start_button.addEventListener('click', destroy_splash);
 
-    scores.createBoard(ulElement, createHtml);
+    scores.create_board(ul_element, create_html);
   }
 
   // GAME SCREEN ===========================================
 
   // MOUSE POS INSIDE CANVAS =====================
 
-  const gameScreen = () => {
-    audioElement.play();
-    canvasElement = createHtml(`<canvas id="canvas" width="1000" height="800"></canvas>`);
-    mainContentElement.appendChild(canvasElement);
+  const game_screen = () => {
+    audio_element.play();
+    canvas_element = create_html(`<canvas id="canvas" width="1000" height="800"></canvas>`);
+    main_content_element.appendChild(canvas_element);
 
     // CANVAS ==
     const canvas = document.getElementById('canvas'),
-      maxWidth = Number(canvas.getAttribute('width')),
-      maxHeight = Number(canvas.getAttribute('height')),
+      max_width = Number(canvas.getAttribute('width')),
+      max_height = Number(canvas.getAttribute('height')),
       ctx = canvas.getContext('2d');
     // ========
 
-    const endCallback = () => {
-      destroyCanvas();
+    const end_callback = () => {
+      destroy_canvas();
     }
-    game = new Game(name, canvas, ctx, maxWidth, maxHeight, endCallback);
+    game = new Game(name, canvas, ctx, max_width, max_height, end_callback, loaded_data.images, loaded_data.sounds);
   }
 
   // END GAME =============================================
 
-  const endGame = () => {
-    const pScore = game.player.score,
-      pName = game.player.name;
+  const end_game = () => {
+    const p_score = game.player.score,
+      p_name = game.player.name;
 
-    endGameElement = createHtml(`<div id="endgame-container">
+    end_game_element = create_html(`<div id="endgame-container">
       <h1>Game Over</h1>
       <p>You scored
         <span id="final-score"></span> points.</p>
       <button id="restart-button">Back to Start</button>
     </div>`);
-    mainContentElement.appendChild(endGameElement);
+    main_content_element.appendChild(end_game_element);
 
-    restartButton = document.getElementById('restart-button');
-    finalScore = document.getElementById('final-score');
-    finalScore.innerText = game.player.score;
-    scores.store(pName, pScore);
-    restartButton.addEventListener('click', destroyEndGame);
+    restart_button = document.getElementById('restart-button');
+    final_score = document.getElementById('final-score');
+    final_score.innerText = game.player.score;
+    scores.store(p_name, p_score);
+    restart_button.addEventListener('click', destroy_end_game);
   }
-  buildSplash();
+  build_splash();
 }
 
 // LOAD ==================================================
 
-window.addEventListener('load', main);
+window.addEventListener('load', () => preload(main));
 
 
 
