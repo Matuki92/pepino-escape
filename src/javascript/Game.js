@@ -9,7 +9,6 @@ class Game{
     this.callback = callback;
     this.images = images;
     this.sounds = sounds;
-    this.audio_el = document.getElementById('music');
 
     this.player = new Player(name, canvas, ctx, max_width/2, max_height/2, images, sounds);
 
@@ -93,7 +92,7 @@ class Game{
       obstacle.y = obstacle.start_position;
       this.player.lives--;
 
-      if (!this.audio_el.muted) {
+      if (!document.querySelector('#audio-element').muted) {
         this.player.meow.play();
         this.player.meow.currentTime = 0.2;
       }
