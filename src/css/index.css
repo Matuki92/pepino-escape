@@ -14,7 +14,7 @@ body {
 /* ---- typography ---- */
 @font-face {
     font-family: 'Bungee';
-    src: url('./../font/Bungee-Regular.ttf');
+    src: url('./../font/Bungee_Regular.ttf');
 }
 
 body {
@@ -56,7 +56,7 @@ p {
 /* ---- layout ---- */
 
 body {
-  background-image: url('./../../images/body-bg.jpg');
+  background-image: url('./../../images/body_bg.jpg');
   cursor: crosshair;
 }
 
@@ -76,7 +76,7 @@ button, input {
 }
 
 button {
-  background-image: url('./../../images/cucumber-btn.png');
+  background-image: url('./../../images/cucumber_btn.png');
   background-size: cover;
   background-position: center;
   background-color: rgb(0, 109, 0);
@@ -112,7 +112,7 @@ input:hover {
 
 /* ---- SPLASH SCREEN ---- */
 
-#splash-container, #endgame-container {
+#splash_container, #endgame_container {
   background-image: url('./../../images/fur.jpg');
   width: 1000px;
   margin: 0 auto;
@@ -124,7 +124,7 @@ input:hover {
   margin-top: 200px;
 }
 
-#splash-container *{
+#splash_container *{
   margin: 20px;
 }
 
@@ -142,14 +142,14 @@ input:hover {
 
 /* ---- SCORE ---- */
 
-#score-container {
+#score_container {
   color:white;
   position:fixed;
   top: 20%;
   padding: 20px;
 }
 
-#score-container li{
+#score_container li{
   list-style-type: none;
 }
 

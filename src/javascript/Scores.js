@@ -40,7 +40,7 @@ class Scores{
   }
 
   draw_sorted(k, key) {
-    const score_board = this.create_html('<li class="score-row"></li>');
+    const score_board = this.create_html('<li class="score_row"></li>');
     if (key){
       this.ul_element.appendChild(score_board);
       score_board.innerText = key + ' = ' + k + ' Pts';

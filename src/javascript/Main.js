@@ -6,8 +6,8 @@ const main = (loaded_data) => {
 
   const main_content_element = document.getElementById('content'),
     music_switch = document.getElementById('music'),
-    audio_element = document.getElementById('audio-element'),
-    ul_element = document.getElementById('score-board');
+    audio_element = document.getElementById('audio_element'),
+    ul_element = document.getElementById('score_board');
 
   let name,
     game,
@@ -84,17 +84,17 @@ const main = (loaded_data) => {
   }
 
   const build_splash = () => {
-    splash_element = create_html(`<div id="splash-container">
+    splash_element = create_html(`<div id="splash_container">
       <h1>Pepino Escape</h1>
       <p>Cucumbers have invaded the planet <br> forcing Kiwi to leave. <br>
       Avoid them by moving the pointer over the game screen.</p>
-      <input id="insert-name" placeholder="Insert Your Name Here" style="display:default">
-      <button id="start-button" style="display:none">Start Game</button>
+      <input id="insert_name" placeholder="Insert Your Name Here" style="display:default">
+      <button id="start_button" style="display:none">Start Game</button>
   </div>`);
     main_content_element.appendChild(splash_element);
 
-    input_element = document.getElementById('insert-name');
-    start_button = document.getElementById('start-button');
+    input_element = document.getElementById('insert_name');
+    start_button = document.getElementById('start_button');
     input_element.addEventListener('keypress', input_handler);
     start_button.addEventListener('click', destroy_splash);
 
@@ -129,16 +129,16 @@ const main = (loaded_data) => {
     const p_score = game.player.score,
       p_name = game.player.name;
 
-    end_game_element = create_html(`<div id="endgame-container">
+    end_game_element = create_html(`<div id="endgame_container">
       <h1>Game Over</h1>
       <p>You scored
-        <span id="final-score"></span> points.</p>
-      <button id="restart-button">Back to Start</button>
+        <span id="final_score"></span> points.</p>
+      <button id="restart_button">Back to Start</button>
     </div>`);
     main_content_element.appendChild(end_game_element);
 
-    restart_button = document.getElementById('restart-button');
-    final_score = document.getElementById('final-score');
+    restart_button = document.getElementById('restart_button');
+    final_score = document.getElementById('final_score');
     final_score.innerText = game.player.score;
     scores.store(p_name, p_score);
     restart_button.addEventListener('click', destroy_end_game);

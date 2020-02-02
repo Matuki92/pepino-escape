@@ -23,12 +23,12 @@ class Player {
 
   get_loaded_data() {
     // Set images
-    this.player_main_image = this.images.filter(img => img.target === 'player-main')[0].image;
-    this.player_fire_anim = this.images.filter(img => img.target === 'player-fire')[0].image;
+    this.player_main_image = this.images.filter(img => img.target === 'player_main')[0].image;
+    this.player_fire_anim = this.images.filter(img => img.target === 'player_fire')[0].image;
 
     // Set sounds
     this.meow = this.sounds.filter(snd => snd.target === 'meow')[0].audio;
-    this.tuna_can = this.sounds.filter(snd => snd.target === 'tuna-can')[0].audio;
+    this.tuna_can = this.sounds.filter(snd => snd.target === 'tuna_can')[0].audio;
   }
 
   update() {

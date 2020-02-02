@@ -14,7 +14,7 @@ class Game {
     this.player = new Player(name, canvas, ctx, max_width/2, max_height/2, images, sounds);
 
     this.obstacles = [];
-    this.powerup;
+    this.tuna_can;
 
     this.player_fire_anim_frame = 0;
 
@@ -54,17 +54,17 @@ class Game {
       obstacle.draw();
     });
     
-    if (this.player.score && this.player.score % 200 === 0 && !this.powerup) {
-      this.make_powerup();
+    if (this.player.score && this.player.score % 500 === 0 && !this.tuna_can) {
+      this.make_tuna_can();
     }
     
-    if (this.powerup) {
-      this.collision_check(this.powerup);
+    if (this.tuna_can) {
+      this.collision_check(this.tuna_can);
 
-      if (this.powerup.update()) {
-        this.powerup = undefined;
+      if (this.tuna_can.update()) {
+        this.tuna_can = undefined;
       } else {
-        this.powerup.draw();
+        this.tuna_can.draw();
       }
     }
 
@@ -80,7 +80,7 @@ class Game {
         this.frame();
       });
     }
-    
+
     else {
       window.clearInterval(this.interval_id);
       this.player.meow.pause();
@@ -103,9 +103,9 @@ class Game {
     this.interval_id = window.setInterval(make_obstacle, 3000);
   }
 
-  make_powerup() {
-    const powerup = new Powerup(this.ctx, this.max_width, this.max_height, this.images);
-    this.powerup = powerup;
+  make_tuna_can() {
+    const tuna_can = new Tuna_can(this.ctx, this.max_width, this.max_height, this.images);
+    this.tuna_can = tuna_can;
   }
 
   // COLLISIONS =========================================================
@@ -118,11 +118,11 @@ class Game {
 
     if (collides_left && collides_right && collides_top && collides_bottom) {
 
-      if (!document.querySelector('#audio-element').muted) {
+      if (!document.querySelector('#audio_element').muted) {
         if (prop.type === 'obstacle') {
           this.player.meow.play();
           this.player.meow.currentTime = 0.2;
-        } else if (prop.type === 'powerup') {
+        } else if (prop.type === 'tuna_can') {
           this.player.tuna_can.play();
           this.player.tuna_can.currentTime = 0.2;
         }
@@ -137,9 +137,9 @@ class Game {
         this.ctx.fillStyle = 'rgb(143, 0, 0)';
         this.ctx.fillRect(0, 0, this.max_width, this.max_height);
 
-        // powerup
-      } else if (prop.type === 'powerup') {
-        this.powerup.collided = true;
+        // tuna_can
+      } else if (prop.type === 'tuna_can') {
+        this.tuna_can.collided = true;
         this.player.lives++;
 
         this.ctx.fillStyle = 'rgb(0, 143, 0)';

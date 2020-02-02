@@ -14,23 +14,23 @@ const preload = (start) => {
   const images = [
     {
       target: 'bg_space_1',
-      src: './images/bg-loop.gif',
+      src: './images/bg_loop.gif',
     },
     {
       target: 'obstacle',
       src: './images/cucumber.png',
     },
     {
-      target: 'player-main',
-      src: './images/player-kiwi.png',
+      target: 'player_main',
+      src: './images/player_kiwi.png',
     },
     {
-      target: 'player-fire',
-      src: './images/fire-sprite.png',
+      target: 'player_fire',
+      src: './images/fire_sprite.png',
     },
     {
-      target: 'tuna-can',
-      src: './images/tuna-can.png',
+      target: 'tuna_can',
+      src: './images/tuna_can.png',
     },
   ];
 
@@ -52,8 +52,8 @@ const preload = (start) => {
       src: './sound/meow.wav',
     },
     {
-      target: 'tuna-can',
-      src: './sound/tuna-can.mp3',
+      target: 'tuna_can',
+      src: './sound/tuna_can.mp3',
     },
   ]
 
