@@ -25,11 +25,11 @@ const main = (loaded_data) => {
   // BACKGROUND MUSIC =====================================
 
   const handle_music_switch = () => {
-    if (music_switch.innerText == 'Sound Off'){
+    if (music_switch.innerText == 'Sound Off') {
       music_switch.innerText = 'Sound On';
       audio_element.muted = false;
     }
-    else{
+    else {
       music_switch.innerText = 'Sound Off';
       audio_element.muted = true;
     }
@@ -71,10 +71,15 @@ const main = (loaded_data) => {
 
   const input_handler = (event) => {
     if (event.key == 'Enter' && input_element.value != ''){
-      name = input_element.value;
-      start_button.setAttribute('style','display:default');
-      input_element.removeEventListener('keypress', input_handler);
-      input_element.setAttribute('style', 'display:none');
+      if (input_element.value.length > 10) {
+        input_element.value = '';
+        input_element.placeholder = 'Name is too long';
+      } else {
+        name = input_element.value;
+        start_button.setAttribute('style','display:default');
+        input_element.removeEventListener('keypress', input_handler);
+        input_element.setAttribute('style', 'display:none');
+      }
     }
   }
 

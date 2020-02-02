@@ -1,6 +1,6 @@
 'use strict'
 
-class Game{
+class Game {
 
   constructor(name, canvas, ctx, max_width, max_height, callback, images, sounds) {
     this.ctx = ctx;
@@ -9,14 +9,23 @@ class Game{
     this.callback = callback;
     this.images = images;
     this.sounds = sounds;
+    this.canvas = canvas;
 
     this.player = new Player(name, canvas, ctx, max_width/2, max_height/2, images, sounds);
 
     this.obstacles = [];
+    this.powerup;
 
     this.player_fire_anim_frame = 0;
 
-    this.mate_it_rain();
+    this.init();
+  }
+  
+  init() {
+    const bg_stars_1 = this.images.filter(img => img.target === 'bg_space_1')[0].image;
+    this.canvas.style.backgroundImage = `url("${bg_stars_1.src}")`;
+
+    this.make_it_rain();
     this.frame();
   }
 
@@ -41,9 +50,23 @@ class Game{
       if (obstacle.update()) {
         this.player.score += 10;
       }
-
+      
       obstacle.draw();
     });
+    
+    if (this.player.score && this.player.score % 200 === 0 && !this.powerup) {
+      this.make_powerup();
+    }
+    
+    if (this.powerup) {
+      this.collision_check(this.powerup);
+
+      if (this.powerup.update()) {
+        this.powerup = undefined;
+      } else {
+        this.powerup.draw();
+      }
+    }
 
     this.player.draw();
     this.draw_stats();
@@ -51,13 +74,14 @@ class Game{
 
   // MAIN FRAMES FUNCTION =============================================
   frame() {
-    if (this.player.lives >= 0){
+    if (this.player.lives >= 0) {
       this.draw();
       window.requestAnimationFrame(() => {
         this.frame();
       });
     }
-    else{
+    
+    else {
       window.clearInterval(this.interval_id);
       this.player.meow.pause();
       this.callback();
@@ -66,12 +90,12 @@ class Game{
 
   // OBSTACLES ========================================================
 
-  mate_it_rain() {
+  make_it_rain() {
     const make_obstacle = () => {
       const obstacle = new Obstacle(this.ctx, this.max_width, this.max_height, this.images);
       this.obstacles.push(obstacle);
 
-      if (this.obstacles.length === 10) {
+      if (this.obstacles.length === 8) {
         window.clearInterval(this.interval_id);
       }
     }
@@ -79,26 +103,48 @@ class Game{
     this.interval_id = window.setInterval(make_obstacle, 3000);
   }
 
+  make_powerup() {
+    const powerup = new Powerup(this.ctx, this.max_width, this.max_height, this.images);
+    this.powerup = powerup;
+  }
+
   // COLLISIONS =========================================================
 
-  collision_check(obstacle) {
-    const collides_right = obstacle.x - obstacle.width  / 2 + 35 < this.player.x + this.player.width / 2;
-    const collides_left = obstacle.x + obstacle.width / 2 - 15> this.player.x - this.player.width / 2;
-    const collides_top = obstacle.y - obstacle.height / 2  + 15 < this.player.y + this.player.height / 2;
-    const collides_bottom = obstacle.y + obstacle.height / 2 - 15 > this.player.y - this.player.height / 2;
+  collision_check(prop) {
+    const collides_right = prop.x - prop.width  / 2 + 35 < this.player.x + this.player.width / 2;
+    const collides_left = prop.x + prop.width / 2 - 15> this.player.x - this.player.width / 2;
+    const collides_top = prop.y - prop.height / 2  + 15 < this.player.y + this.player.height / 2;
+    const collides_bottom = prop.y + prop.height / 2 - 15 > this.player.y - this.player.height / 2;
 
-    if (collides_left && collides_right && collides_top && collides_bottom){
-      obstacle.x = obstacle.random_x();
-      obstacle.y = obstacle.start_position;
-      this.player.lives--;
+    if (collides_left && collides_right && collides_top && collides_bottom) {
 
       if (!document.querySelector('#audio-element').muted) {
-        this.player.meow.play();
-        this.player.meow.currentTime = 0.2;
+        if (prop.type === 'obstacle') {
+          this.player.meow.play();
+          this.player.meow.currentTime = 0.2;
+        } else if (prop.type === 'powerup') {
+          this.player.tuna_can.play();
+          this.player.tuna_can.currentTime = 0.2;
+        }
       }
 
-      this.ctx.fillStyle = 'rgb(143, 0, 0)';
-      this.ctx.fillRect(0, 0, this.max_width, this.max_height);
+      // obstacle
+      if (prop.type === 'obstacle') {
+        prop.x = prop.random_x();
+        prop.y = prop.start_position;
+        this.player.lives--;
+  
+        this.ctx.fillStyle = 'rgb(143, 0, 0)';
+        this.ctx.fillRect(0, 0, this.max_width, this.max_height);
+
+        // powerup
+      } else if (prop.type === 'powerup') {
+        this.powerup.collided = true;
+        this.player.lives++;
+
+        this.ctx.fillStyle = 'rgb(0, 143, 0)';
+        this.ctx.fillRect(0, 0, this.max_width, this.max_height);
+      }
     }
   }
 

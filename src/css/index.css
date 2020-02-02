@@ -163,7 +163,6 @@ input:hover {
   margin-top: 50px;
   border: 2px inset silver;
   border-radius: 5px;
-  background: url('./../../images/bg-loop.gif');
 }
 
 #loading {

@@ -13,6 +13,10 @@ const preload = (start) => {
   // IMAGES
   const images = [
     {
+      target: 'bg_space_1',
+      src: './images/bg-loop.gif',
+    },
+    {
       target: 'obstacle',
       src: './images/cucumber.png',
     },
@@ -23,6 +27,10 @@ const preload = (start) => {
     {
       target: 'player-fire',
       src: './images/fire-sprite.png',
+    },
+    {
+      target: 'tuna-can',
+      src: './images/tuna-can.png',
     },
   ];
 
@@ -42,6 +50,10 @@ const preload = (start) => {
     {
       target: 'meow',
       src: './sound/meow.wav',
+    },
+    {
+      target: 'tuna-can',
+      src: './sound/tuna-can.mp3',
     },
   ]
 

@@ -1,13 +1,13 @@
 'use strict'
 
-class Obstacle {
+class Powerup {
 
   constructor(ctx, max_width, max_height, images) {
     this.ctx = ctx;
-    this.width = 50;
-    this.height = 150;
-    this.speed = 6;
-    this.type = 'obstacle';
+    this.width = 80;
+    this.height = 80;
+    this.speed = 4;
+    this.type = 'powerup';
 
     this.start_position = 0 - this.height / 2;
 
@@ -23,26 +23,22 @@ class Obstacle {
 
   get_loaded_data() {
     // Set images
-    this.image = this.images.filter(img => img.target === 'obstacle')[0].image;
+    this.image = this.images.filter(img => img.target === 'tuna-can')[0].image;
   }
 
   update() {
-    if (this.y > this.max_height){
-      this.y = this.start_position;
-      this.x = this.random_x();
-
-      this.speed += 0.5;
+    if (this.collided || this.y > this.max_height) {
       return true;
     }
 
     this.y += this.speed;
   }
 
-  random_x() {
-    return Math.floor(Math.random() * this.max_width);
+  random_x(){
+    return Math.floor(Math.random()*this.max_width);
   }
 
-  draw() {
+  draw(){
     this.ctx.drawImage(this.image,
       this.x - this.width / 2,
       this.y - this.height / 2,

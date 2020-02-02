@@ -28,10 +28,10 @@ class Player {
 
     // Set sounds
     this.meow = this.sounds.filter(snd => snd.target === 'meow')[0].audio;
+    this.tuna_can = this.sounds.filter(snd => snd.target === 'tuna-can')[0].audio;
   }
 
-
-  update(){
+  update() {
     const handle_mouse_pos = (event) => {
         const rect = this.canvas.getBoundingClientRect();
         this.x = event.clientX - rect.left;

@@ -15,8 +15,10 @@ class Scores{
     this.sort_highest();
   }
 
-  store(p_score, p_name) {
-    this.storage.setItem(p_name, p_score);
+  store(p_name, p_score) {
+    if (!p_name.match(/test/i)) {
+      this.storage.setItem(p_name, p_score);
+    }
   }
 
   clean_board() {
@@ -26,14 +28,11 @@ class Scores{
   }
 
   sort_highest() {
-    let keys = Object.keys(this.storage),
-    i, len = keys.length;
+    const keys = Object.keys(this.storage).map(key => parseInt(key, 10));
 
-    const sorted = keys.sort(function(a, b){
-      return b.length - a.length || a < b;
-    });
+    const sorted = keys.sort((a, b) => a - b).reverse();
 
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       const k = sorted[i];
 
       this.draw_sorted(k, this.storage[k]);
