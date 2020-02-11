@@ -7,7 +7,7 @@ class Obstacle extends Prop {
   }
 
   update() {
-    if (this.y > this.max_height){
+    if (this.y > this.max_height) {
       this.y = this.start_position;
       this.x = this.random_x();
 

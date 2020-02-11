@@ -1,7 +1,7 @@
 'use strict'
 
 // TODO: Remove this useless way to retrieve stored scores
-class Scores{
+class Scores {
 
   constructor(ul_element, create_html) {
     this.storage = window.localStorage;
@@ -17,12 +17,12 @@ class Scores{
 
   store(p_name, p_score) {
     if (!p_name.match(/test/i)) {
-      this.storage.setItem(p_name, p_score);
+      this.storage.setItem(p_score, p_name);
     }
   }
 
   clean_board() {
-    while (this.ul_element.firstChild){
+    while (this.ul_element.firstChild) {
       this.ul_element.firstChild.remove();
     }
   }

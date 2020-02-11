@@ -1,13 +1,13 @@
 'use strict'
 
 class Prop {
-
+  
   constructor(ctx, max_width, max_height, images, width, height, speed, type) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
-    this.speed;
-    this.type;
+    this.speed = speed;
+    this.type = type;
 
     this.start_position = 0 - this.height / 2;
 

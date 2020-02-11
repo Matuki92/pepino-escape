@@ -16,17 +16,21 @@ class Game {
     this.obstacles = [];
     this.tuna_can;
 
-    this.player_fire_anim_frame = 0;
+    this.load();
+  }
+  
+  load() {
+    const bg_stars_1 = this.images.filter(img => img.target === 'bg_space_1')[0].image;
+
+    this.canvas.style.backgroundImage = `url("${bg_stars_1.src}")`;
 
     this.init();
   }
   
   init() {
-    const bg_stars_1 = this.images.filter(img => img.target === 'bg_space_1')[0].image;
-    this.canvas.style.backgroundImage = `url("${bg_stars_1.src}")`;
-
     this.make_it_rain();
     this.frame();
+    this.canvas.addEventListener('mousemove', e => this.player.update(e));
   }
 
   // DRAW FUNCTIONS ==============================================
@@ -151,6 +155,7 @@ class Game {
   // END =================================================================
 
   end(callback) {
+    this.canvas.removeEventListener('mousemove', this.player.update);
     this.callback = callback;
   }
 }
