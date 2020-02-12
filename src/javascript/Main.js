@@ -39,7 +39,7 @@ const main = (loaded_data) => {
 
   // HTML ==================================================
 
-  const create_html = html => {
+  window.create_html = html => {
     const div = document.createElement('div');
     div.innerHTML = html;
     return div.children[0];
@@ -67,7 +67,6 @@ const main = (loaded_data) => {
 
   // =======================================================
   // SPLASH SCREEN =========================================
-  const scores = new Scores(ul_element, create_html);
 
   const input_handler = (event) => {
     if (event.key == 'Enter' && input_element.value != ''){
@@ -98,7 +97,8 @@ const main = (loaded_data) => {
     input_element.addEventListener('keypress', input_handler);
     start_button.addEventListener('click', destroy_splash);
 
-    scores.create_board(ul_element, create_html);
+    // get stored scores (function from Scores.js)
+    draw_scores();
   }
 
   // GAME SCREEN ===========================================
@@ -140,7 +140,7 @@ const main = (loaded_data) => {
     restart_button = document.getElementById('restart_button');
     final_score = document.getElementById('final_score');
     final_score.innerText = game.player.score;
-    scores.store(p_name, p_score);
+    window.localStorage.setItem(`pep_${p_name}`, p_score);
     restart_button.addEventListener('click', destroy_end_game);
   }
 
