@@ -140,7 +140,13 @@ const main = (loaded_data) => {
     restart_button = document.getElementById('restart_button');
     final_score = document.getElementById('final_score');
     final_score.innerText = game.player.score;
-    window.localStorage.setItem(`pep_${p_name}`, p_score);
+
+    if (window.localStorage[p_name]) {
+      window.localStorage[p_name] = p_score;
+    } else {
+      window.localStorage.setItem(`pep_${p_name}`, p_score);
+    }
+    
     restart_button.addEventListener('click', destroy_end_game);
   }
 
