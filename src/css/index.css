@@ -118,7 +118,7 @@ input:hover {
   margin: 0 auto;
   background-color:white;
   text-align: center;
-  padding: 50px;
+  padding: 20px;
   border: 5px solid rgb(0, 0, 0);
   border-radius: 25px;
   margin-top: 200px;
@@ -126,6 +126,11 @@ input:hover {
 
 #splash_container *{
   margin: 20px;
+}
+
+#splash_container #byme {
+  text-shadow: none;
+  font-family: monospace;
 }
 
 /* ---- SETTINGS ---- */
