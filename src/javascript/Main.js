@@ -87,9 +87,8 @@ const main = (loaded_data) => {
     <h1>Pepino Escape</h1>
     <p>Cucumbers have invaded the planet <br> forcing Kiwi to leave. <br>
     Avoid them by moving the pointer over the game screen.</p>
-    <input id="insert_name" placeholder="Insert Your Name Here" style="display:default">
+    <input id="insert_name" placeholder="Insert name and press Enter" style="display:default">
     <button id="start_button" style="display:none">Start Game</button>
-    <span id="byme"><p>by @matuki92</p></span>
   </div>`);
     main_content_element.appendChild(splash_element);
 
