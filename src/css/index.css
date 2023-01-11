@@ -58,6 +58,7 @@ p {
 body {
   background-image: url('./../../images/body_bg.jpg');
   cursor: crosshair;
+  background-size: cover;
 }
 
 audio{
